@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "theatre")
+@Table(name = "theatre", uniqueConstraints=
+@UniqueConstraint(columnNames={"theatre_name", "pincode"}))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,14 +22,21 @@ public class Theatre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("theatre_id")
+    @Column(name = "theatre_id")
     private Integer theatreId;
 
     @JsonProperty("theatre_name")
+    @Column(name = "theatre_name")
     private String theatreName;
 
     @JsonProperty("theatre_location")
+    @Column(name = "theatre_location")
     private String theatreLocation;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "pincode")
     private Integer pincode;
 
     public static void validateForUpsertion(Theatre theatre) {

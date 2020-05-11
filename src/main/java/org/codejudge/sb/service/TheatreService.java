@@ -31,9 +31,11 @@ public class TheatreService {
     public Theatre addTheatre(Theatre theatre) throws GenericException {
         Theatre.validateForUpsertion(theatre);
         validateCity(theatre);
-        theatre = theatreRepository.saveAndFlush(theatre);
-        if (theatre == null) {
-            throw new GenericException("Couldn't add the theatre!!", HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            theatre = theatreRepository.saveAndFlush(theatre);
+        }
+        catch (Exception e){
+            throw new GenericException("Couldn't add the theatre!!", HttpStatus.BAD_REQUEST);
         }
         return theatre;
     }
